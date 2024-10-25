@@ -1,21 +1,19 @@
 .App {
   text-align: center;
+  background-color: #c9d0bc;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 15vmin;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  border-radius: 50%;
+  width: 15vmin;
+  object-fit: cover;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #6ba0a2;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,16 +21,83 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.button-group{
+  background-color: #c9d0bc;
+  min-height: 30vh;
+  gap: 100vh;
+  display: flex;
+  flex-direction: row;
+  margin-left: 10vh;
+  align-items: center;
+  justify-content: center;
+}
+.To-do-section{
+  background-color: #ffff;
+  font-size: calc(20px + 2vmin);
+  color: #5a0b05;
+  margin-top: 20vh;
+  min-height: 30vh;
+}
+.Lista-Tareas{
+  background-color: #ffff;
+  font-size: calc(15px + 2vmin);
+  color:#6ba0a2;
+  margin-top: 5vh;
+}
+.Tareas{
+  font-size: calc(10px + 2vmin);
+  color: #0000;
+}
+.button-group {
+  justify-content: center;
+  display: flex; 
+  gap: 50px; 
+}
+.add-button {
+  background-color: #af160b;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.edit-button {
+  background-color: #af160b;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
 }
+.delete-button {
+  background-color: #af160b;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #3f0202;
+}
+.edit-button:hover {
+  background-color: #3f0202;
+}
+.delete-button:hover {
+  background-color: #3f0202;
+}
+
