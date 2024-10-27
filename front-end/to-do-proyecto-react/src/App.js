@@ -93,7 +93,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>To do list App</p>
       </header>
-      <div className="button-group">
+      <div className="Añadir-tareas">
         <button className="add-button" onClick={() => { setTareaInput(''); setEditingIndex(null); setIsFormVisible(true); }}>
           Añadir tarea
         </button>
@@ -124,10 +124,10 @@ function App() {
               onChange={() => CompletarTarea(index)}
             />
             {tarea.título}
-            <button className="edit-button" onClick={() => editarTarea(index)}>
+            <button button style={{ margin: '10px' }} className="edit-button" onClick={() => editarTarea(index)}>
               <FontAwesomeIcon icon={faEdit} />
             </button>
-            <button className="delete-button" onClick={() => eliminarTarea(index)}>
+            <button button style={{ margin: '10px' }} className="delete-button" onClick={() => eliminarTarea(index)}>
               <FontAwesomeIcon icon={faTrash} />
             </button>
           </li>

@@ -1,5 +1,4 @@
 .App {
-  text-align: center;
   background-color: #c9d0bc;
 }
 
@@ -21,22 +20,24 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.button-group{
-  background-color: #c9d0bc;
-  min-height: 30vh;
-  gap: 100vh;
+.Añadir-tareas{
   display: flex;
-  flex-direction: row;
-  margin-left: 10vh;
-  align-items: center;
-  justify-content: center;
+  justify-content: center; 
+  align-items: center;     
+  height: 10vh;           
+  padding: 20px;          
+  margin: 20px 0;         
+  border: 1px solid #ccc;
+  margin-right: 10px;
 }
 .To-do-section{
   background-color: #ffff;
   font-size: calc(20px + 2vmin);
   color: #5a0b05;
-  margin-top: 20vh;
-  min-height: 30vh;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;    
+  width: 100%;   
 }
 .Lista-Tareas{
   background-color: #ffff;
@@ -48,11 +49,10 @@
   font-size: calc(10px + 2vmin);
   color: #0000;
 }
-.button-group {
-  justify-content: center;
-  display: flex; 
-  gap: 50px; 
+.Añadir-tareas input{
+  margin: 20px;
 }
+
 .add-button {
   background-color: #af160b;
   border: none;
@@ -64,33 +64,30 @@
   cursor: pointer;
   border-radius: 30px;
   transition: background-color 0.3s;
-  margin: 20px;
-  
-
 }
 
 .edit-button {
   background-color: #af160b;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 50px;
   transition: background-color 0.3s;
 }
 .delete-button {
   background-color: #af160b;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 5px 10px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 50px;
   transition: background-color 0.3s;
 }
 
@@ -108,5 +105,15 @@
   color: black;
   font-size: calc(2px + 2vmin);
   font-family:Arial, Helvetica, sans-serif;
+  text-align: left;
+  list-style-type: none;      
+  padding: 0;                 
+  margin: 0;                  
+  width: 300px;                     
   
 }
+
+.Tareas li {
+  margin-bottom: 10px;       
+}
+
