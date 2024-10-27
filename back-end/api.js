@@ -33,6 +33,18 @@ app.put('/tareas/:id', (req, res) => {
     }
 });
 
+//Eliminar tarea
+app.delete('/tareas/:id', (req, res) => {
+  const { id } = req.params;
+  const index = tareas.findIndex(tarea => tarea.id == id);
+  if (index !== -1) {
+      const [tareaEliminada] = tareas.splice(index, 1);
+      res.json(tareaEliminada);
+  } else {
+      res.status(404).send('Tarea no encontrada');
+  }
+});
+
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
