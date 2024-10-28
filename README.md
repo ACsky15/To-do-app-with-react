@@ -6,7 +6,7 @@ Ejecución del proyecto
 - Todas las dependencias necesarias están en los archivos package.json y node_modules.
 - Deben crear un folder a donde descargar el proyecto antes de copiar el repositorio a Visual Studio.
 - Asegurese de que el backend este corriendo en el puerto 5000, escriba en la terminal del folder back-end el siguiente comando node api.js y le dirá en cual puerto está corriendo, corra npm start para iniciar el servidor.
-- Esta es la única dirección en la que podrá encontrar funcionando la api: http://localhost:5000/tareas no funciona en  http://localhost:5000 sólo.
+- Esta es la única dirección en la que podrá encontrar funcionando la api: http://localhost:5000/tareas sólo, no funciona en http://localhost:5000.
 - Para iniciar la app del lado del front end deben de abir la terminal en el folder que contiene todo el front-end, se llama así mismo front-end, corra el siguiente comando npm run start, esto abrirá en su navegador predeterminado la siguiente url: http://localhost:3000/ , entonces podrá interactuar con la app.
 
 Funcionamiento de la app
