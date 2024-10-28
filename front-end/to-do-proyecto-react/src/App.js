@@ -2,19 +2,21 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [tareas, setTareas] = useState([]);
   const [tareaInput, setTareaInput] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isListVisible, setIsListVisible] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:5000/tareas')
       .then((response) => response.json())
       .then((data) => {
-       
         const tareasConEstado = data.map(tarea => ({
           ...tarea,
           completada: tarea.completada || false // Si no hay propiedad, asigna false
@@ -26,7 +28,7 @@ function App() {
   const CompletarTarea = (index) => {
     const tareaId = tareas[index].id;
     const tareaActualizada = { ...tareas[index], completada: !tareas[index].completada };
-  
+
     fetch(`http://localhost:5000/tareas/${tareaId}`, {
       method: 'PUT',
       headers: {
@@ -42,7 +44,29 @@ function App() {
         setTareas(tareasActualizadas);
       });
   };
-   
+
+  const buscarTarea = () => {
+    if (!searchTerm) {
+      alert('Por favor ingresa un término de búsqueda.');
+      return;
+    }
+  
+    const index = tareas.findIndex(tarea => 
+      tarea.título.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
+    if (index === -1) {
+      alert('Tarea no encontrada');
+    } else {
+      setIsListVisible(true); 
+      const tareasActualizadas = tareas.map((tarea, i) => ({
+        ...tarea,
+        isHighlighted: i === index,
+      }));
+      setTareas(tareasActualizadas);
+    }
+  };
+
   const añadirTarea = () => {
     const tarea = { título: tareaInput };
     const method = editingIndex !== null ? 'PUT' : 'POST';
@@ -87,6 +111,10 @@ function App() {
       });
   };
 
+  const visibilidadTareas = () => {
+    setIsListVisible(!isListVisible);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -112,27 +140,47 @@ function App() {
             <button onClick={() => setIsFormVisible(false)}>Cancelar</button>
           </div>
         )}
+
+<div className='buscador'>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar tarea"
+          />
+          <button  onClick={buscarTarea}>
+          <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
       </div>
+
       <div className="To-do-section">
-        <h1 className="Lista-Tareas">Lista de tareas</h1>
+        <h1 className="Titulo-seccion-tareas">Lista de tareas</h1>
+          <button className='vistaTareas' onClick={visibilidadTareas}>
+            {isListVisible ? 'Ocultar Tareas' : 'Mostrar Tareas'}
+          </button>
+                  
+        { /* <Estas son las tareas mostadas por el botón mostrar/ocultar/ y la función resaltar la tarea hallada> */ } 
+        {isListVisible && (
         <ul className="Tareas">
           {tareas.map((tarea, index) => (
-            <li key={tarea.id} style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}>
-            <input
-              type="checkbox"
-              checked={tarea.completada}
-              onChange={() => CompletarTarea(index)}
-            />
-            {tarea.título}
-            <button button style={{ margin: '10px' }} className="edit-button" onClick={() => editarTarea(index)}>
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-            <button button style={{ margin: '10px' }} className="delete-button" onClick={() => eliminarTarea(index)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-          </li>
-          ))}
-        </ul>
+            <li key={tarea.id} className={tarea.isHighlighted ? 'highlighted' : ''} style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}>
+              <input
+                type="checkbox"
+                checked={tarea.completada}
+                onChange={() => CompletarTarea(index)}
+              />
+              {tarea.título}
+                <button className="edit-button" onClick={() => editarTarea(index)} style={{ margin: '10px' }}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+                <button className="delete-button" onClick={() => eliminarTarea(index)} style={{ margin: '10px' }}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

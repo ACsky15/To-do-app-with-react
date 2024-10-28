@@ -1,69 +1,131 @@
-.App {
-  background-color: #c9d0bc;
-}
-
 .App-logo {
-  height: 15vmin;
   pointer-events: none;
   border-radius: 50%;
   width: 15vmin;
   object-fit: cover;
+  height: 15vh;
+  margin-top: 5vh;
 }
 
 .App-header {
+  margin: 0;
   background-color: #6ba0a2;
-  min-height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
-.Añadir-tareas{
+
+/* contenedor sección añadir tareas de la app */
+.Añadir-tareas {
+  background-color: #c9d0bc;
   display: flex;
-  justify-content: center; 
-  align-items: center;     
-  height: 10vh;           
-  padding: 20px;          
-  margin: 20px 0;         
-  border: 1px solid #ccc;
-  margin-right: 10px;
-}
-.To-do-section{
-  background-color: #ffff;
-  font-size: calc(20px + 2vmin);
-  color: #5a0b05;
-  display: flex;
-  flex-direction: column; 
-  align-items: center;    
-  width: 100%;   
-}
-.Lista-Tareas{
-  background-color: #ffff;
-  font-size: calc(15px + 2vmin);
-  color:#6ba0a2;
-  margin-top: 5vh;
-}
-.Tareas{
-  font-size: calc(10px + 2vmin);
-  color: #0000;
-}
-.Añadir-tareas input{
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+
+  }
+
+.Añadir-tareas input {
   margin: 20px;
 }
 
+/* contenedor manejo de lista de tareas */
+.To-do-section {
+  background-color: #ffff;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Titulo-seccion-tareas {
+  font-size: calc(10px + 2vmin);
+  color: #6ba0a2;
+  text-align: left;
+  margin: 5vh;
+  
+}
+
+/* Botón mostrar/ocultar tareas */
+.vistaTareas {
+  background-color: #6ba0a27b;
+  font-size: calc(1px + 2vmin);
+  border-radius: 80px;
+  padding: 10px;
+  max-width: fit-content;
+  margin: 0 12vh ;
+  display: flex;
+  border-width: 1cap;
+  border-color: #6ba0a20d;
+  color: #04413d;
+  cursor: pointer;
+  transition: background-color 0.3s;
+ 
+}
+
+.vistaTareas:hover {
+  background-color: #03333456;
+   
+}
+/* Sección visualización de las tareas */
+.Tareas {
+  color: #000000;
+  font-size: calc(2px + 2vmin);
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.Tareas-buscador{
+
+  color: #000000;
+  font-size: calc(2px + 2vmin);
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: right;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20vh;
+  
+}
+
+/* Buscador */
+.buscador {
+ display: contents;
+ align-items: center;
+ 
+   
+}
+
+ .buscador input {
+  align-items: flex-end;
+  
+}
+
+.highlighted {
+  background-color: rgba(97, 117, 116, 0.41); 
+}
+
+
+/* Botones */
 .add-button {
   background-color: #af160b;
-  border: none;
+  max-width: fit-content;
+  border-width: 1cap;
+  border-color:#8c12091f ;
   color: white;
-  padding: 20px 30px;
+  padding: 15px 30px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
   border-radius: 30px;
-  transition: background-color 0.3s;
 }
 
 .edit-button {
@@ -76,8 +138,8 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 50px;
-  transition: background-color 0.3s;
 }
+
 .delete-button {
   background-color: #af160b;
   border: none;
@@ -88,32 +150,38 @@
   font-size: 16px;
   cursor: pointer;
   border-radius: 50px;
-  transition: background-color 0.3s;
+  
 }
 
 .add-button:hover {
   background-color: #3f0202;
 }
+
 .edit-button:hover {
   background-color: #3f0202;
 }
+
 .delete-button:hover {
   background-color: #3f0202;
 }
 
-.Tareas{
-  color: black;
-  font-size: calc(2px + 2vmin);
-  font-family:Arial, Helvetica, sans-serif;
-  text-align: left;
-  list-style-type: none;      
-  padding: 0;                 
-  margin: 0;                  
-  width: 300px;                     
-  
+@media (max-width: 767px) { /* Máx 767px de ancho: smartphones */
+  .App{
+    max-width: 100vw;
+    max-height: auto;
+  }
 }
 
-.Tareas li {
-  margin-bottom: 10px;       
+@media (min-width: 768px) and (max-width: 1023px) { /* 768px a 1023px de ancho: tablets */
+  .App{
+    max-width: 100%;
+    max-height: auto;
+  }
 }
 
+@media (min-width: 1024px) { /* Mín 1024px de ancho: laptops y Desktops */
+  .App {
+    max-width: 1200vw;
+    max-height: auto;
+  }
+}

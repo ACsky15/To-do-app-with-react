@@ -9,7 +9,7 @@ app.use(express.json());
 let tareas = [];
 let idCounter = 0;
 
-//Lista de tareas almacenadas
+//Almacenamiento de tareas
 app.get('/tareas', (req, res) => {
     res.json(tareas);
   });
@@ -28,9 +28,7 @@ app.put('/tareas/:id', (req, res) => {
     if (index !== -1) {
         tareas[index] = { ...tareas[index], ...req.body };
         res.json(tareas[index]);
-    } else {
-        res.status(404).send('Tarea no encontrada');
-    }
+    } 
 });
 
 //Eliminar tarea
@@ -40,8 +38,24 @@ app.delete('/tareas/:id', (req, res) => {
   if (index !== -1) {
       const [tareaEliminada] = tareas.splice(index, 1);
       res.json(tareaEliminada);
+  } 
+});
+
+/*Buscador */
+app.get('/tareas', (req, res) => {
+  const { query } = req.query; 
+  if (!query) {
+    return res.status(400).json({ message: 'Query no proporcionada' });
+  }
+  
+  const tareasFiltradas = tareas.filter(tarea => 
+    tarea.título.toLowerCase().includes(query.toLowerCase())
+  );
+
+  if (tareasFiltradas.length > 0) {
+    res.json(tareasFiltradas);
   } else {
-      res.status(404).send('Tarea no encontrada');
+    res.status(404).json({ message: 'Tarea no encontrada' });
   }
 });
 
