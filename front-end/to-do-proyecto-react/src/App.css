@@ -157,12 +157,7 @@ input[type="text"] {
   
  }
  
- .highlighted {
-   background-color: rgba(97, 117, 116, 0.236); 
- }
-
-
-/* contenedor manejo de lista de tareas */
+ /* contenedor manejo de lista de tareas */
 .To-do-section {
   background-image:url(../public/nota.jpg) ;
   background-size: cover; 
@@ -216,6 +211,7 @@ input[type="text"] {
    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s
   } 
 
+
 .show { 
   display: block; 
   transition: max-height 0.5s ease-in-out;
@@ -223,6 +219,7 @@ input[type="text"] {
   padding: 10px;
   margin: 10px 0;
 }
+
 
 /* Estilo para el modal */
 .modal {
@@ -286,6 +283,12 @@ input[type="text"] {
   align-content: space-between;
    
 }
+
+.Añadir-tareas .add-button {
+  display: block; } 
+.Añadir-tareas.show .add-button { 
+  display: none; }
+
 
 .edit-button {
   background-color: #056964ab;
