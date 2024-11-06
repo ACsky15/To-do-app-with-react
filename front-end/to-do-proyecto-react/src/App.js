@@ -130,6 +130,8 @@ function App() {
   }
 };
 
+const handleKeyPress = (event) => { if (event.key === 'Enter') { buscarTarea(); } };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -143,11 +145,12 @@ function App() {
             <li><a href="#" data-target="agregar" onClick={handleToggle}>
               <FontAwesomeIcon icon={faAdd} /> Crea tu lista tareas</a>
               </li> 
-              <div id="agregar" className="Añadir-tareas"> 
+              <div id="agregar" className= {`Añadir-tareas ${isFormVisible ? 'show' : ''}`}> 
               <button className="add-button" onClick={() => { 
                 setTareaInput(''); 
                 setEditingIndex(null); 
-                setIsFormVisible(true); }}>
+                setIsFormVisible(true); }}
+                style={{ display: isFormVisible ? 'none' : 'block' }}>
                   <FontAwesomeIcon icon={faAdd} />
                   </button> {isFormVisible && ( 
                     <div className="form-container"> 
@@ -155,17 +158,20 @@ function App() {
                     setTareaInput(e.target.value)} placeholder="Añade tu tarea" required /> 
                     <button id='Añadir' onClick={añadirTarea}>Añadir</button> 
                     <button id='Cancelar' onClick={() =>
-                     setIsFormVisible(false)}>Cancelar
-                     </button> 
-                     </div>
+                    setIsFormVisible(false)}>Cancelar
+                    </button> 
+                    </div>
                   )} 
                 </div>
-             
               <li><a href="#" data-target="buscar" onClick={handleToggle}><FontAwesomeIcon icon={faCheckCircle} /> Comprueba si has completado tu tarea</a></li>
                <div id="buscar" className='buscar-tarea' > 
-                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-                 placeholder="Buscar tarea" /> 
-                 <button id='buscador' onClick={buscarTarea}> 
+                <input 
+                type="text" value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Buscar tarea" 
+                onKeyDown={(e) => handleKeyPress(e)}
+                /> 
+                <button id='buscador' onClick={buscarTarea}> 
                   <FontAwesomeIcon icon={faSearch} /> 
                   </button> {searchResults.length > 0 && ( 
                     <ul className="Lista-tareas"> 
