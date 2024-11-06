@@ -11,13 +11,10 @@ Ejecución del proyecto
 
 Funcionamiento de la app
 
-Al entrar a la aplicación web verán 3 botones y un buscador:
-- Añadir tarea: al hacer clic en el botón añadir tarea aparecen dos botones Añadir y Cancelar:
-  -De querer añadir una tarea deben colocar el nombre de la tarea en la entrada por teclado 'Añadir tarea'.
-  -De querer cancelar la acción de añadir tarea debe hacer clic en el botón cancelar.
-- Buscador:
-  El buscador no busca al hacer clic a enter deben presionar el botón en forma de lupa para buscar:
-    - Esta acción arroja dos resultados, el primero es un cuadro de diálogo diciendo que la tarea no se encontró si la tarea introducida en el buscador no está en el Json con la lista de tareas añadidas, el segundo     resultado es que la tarea ha sido encontrada; se mostrara toda la lista de tareas y se señalara con un hightlight gris la tarea encontrada, esto le permitira inmediatamente encontrarla y borrarla si sabe que        anotó muchas tareas y esa ya la completó.
-- Mostrar/ ocultar tareas:
-  Por default al abrir la aplicación las tareas están ocultas, si quiere ver su lista de tareas debe presionar el botón Mostrar Tareas, si las quiere volver a ocultar debe presionar el botón de nuevo, el botón ya no dira mostrar tarea después de haberlo presionado (no importa si hay o no tareas almacenadas, su estado cambiará a ocultar tareas) de modo que si te mostró tareas y las quieres volver a ocultar, las ocultes al presionar Ocultar Tareas.
+Al entrar a la aplicación web verá un menú de acordeón o menú desplegable con 3 enlaces:
+El primer enlance contiene la función de crear una lista de tarea, al hacer clic en el botón con signo de más este desaparece y aparece lo siguiente:
+- un input para ecribir el nombre de la tarea, un botón para concretar la opción de añadir y otro para cancelar la acción:
+El segundo enlace te permite comprobar si has completado una tarea, tiene el input del buscador y una lupa como botón de buscar, también funciona al hacer clic en enter:
+    - Esta acción arroja dos resultados, el primero es un cuadro de diálogo diciendo que la tarea no se encontró si la tarea introducida en el buscador no está en el Json con la lista de tareas añadidas, el segundo     resultado es que la tarea ha sido encontrada; se mostrará la tarea y podrás tacharla si ya la completaste o tambien puedes verificar si ya la completaste en este caso se verá tachada y marcada como realizada
+El tercer enlace te permite después de un largo día de completar tareas ver todas las que marcaste como completadas y las que no para entonces eliminarlas o editar su título o desmarcarlas si por error la marcaste como completada.
   
