@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faCheckCircle, faEdit, faList, faList12, faListCheck, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [tareas, setTareas] = useState([]);
@@ -10,7 +10,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [isListVisible, setIsListVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
@@ -19,31 +19,35 @@ function App() {
       .then((data) => {
         const tareasConEstado = data.map(tarea => ({
           ...tarea,
-          completada: tarea.completada || false // Si no hay propiedad, asigna false
+          completada: tarea.completada || false 
         }));
         setTareas(tareasConEstado);
       });
   }, []);
 
-  const CompletarTarea = (index) => {
-    const tareaId = tareas[index].id;
-    const tareaActualizada = { ...tareas[index], completada: !tareas[index].completada };
+  const CompletarTarea = (index, isSearchResult = false) => {
+     const tareaId = isSearchResult ? searchResults[index].id : tareas[index].id; 
+     const tareaActualizada = isSearchResult ? { ...searchResults[index], completada: !searchResults[index].completada } : { ...tareas[index], 
+    completada: !tareas[index].completada }; 
+    
+    fetch(`http://localhost:5000/tareas/${tareaId}`, { 
+      method: 'PUT', 
+      headers: { 'Content-Type': 'application/json', 
 
-    fetch(`http://localhost:5000/tareas/${tareaId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      }, 
       body: JSON.stringify(tareaActualizada),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const tareasActualizadas = tareas.map((tarea, i) =>
-          i === index ? data : tarea
-        );
+     }) .then((response) => response.json()) 
+        .then((data) => { 
+      if (isSearchResult) { const resultadosActualizados = searchResults.map((tarea, i) => i === index ? data : tarea ); 
+        setSearchResults(resultadosActualizados); const tareasActualizadas = tareas.map((tarea) => tarea.id === tareaId ? data : tarea ); 
         setTareas(tareasActualizadas);
-      });
-  };
+       } 
+       else 
+       { const tareasActualizadas = tareas.map((tarea, i) => i === index ? data : tarea ); 
+          setTareas(tareasActualizadas);
+        }
+      }); 
+    };
 
   const buscarTarea = () => {
     if (!searchTerm) {
@@ -51,52 +55,53 @@ function App() {
       return;
     }
   
-    const index = tareas.findIndex(tarea => 
+    const resultados = tareas.filter(tarea => 
       tarea.título.toLowerCase().includes(searchTerm.toLowerCase())
     );
   
-    if (index === -1) {
+    if (resultados.length === 0) {
       alert('Tarea no encontrada');
     } else {
-      setIsListVisible(true); 
-      const tareasActualizadas = tareas.map((tarea, i) => ({
-        ...tarea,
-        isHighlighted: i === index,
-      }));
-      setTareas(tareasActualizadas);
+      setSearchResults(resultados);
     }
   };
+  
 
-  const añadirTarea = () => {
-    const tarea = { título: tareaInput };
-    const method = editingIndex !== null ? 'PUT' : 'POST';
-    const url = editingIndex !== null ? `http://localhost:5000/tareas/${tareas[editingIndex].id}` : 'http://localhost:5000/tareas';
-    fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  const añadirTarea = () => { 
+    const tarea = { título: tareaInput }; 
+    fetch('http://localhost:5000/tareas', { 
+      method: 'POST', 
+      headers: { 'Content-Type': 'application/json', }, 
       body: JSON.stringify(tarea),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (editingIndex !== null) {
-          const tareasActualizadas = [...tareas];
-          tareasActualizadas[editingIndex] = data;
-          setTareas(tareasActualizadas);
-          setEditingIndex(null);
-        } else {
-          setTareas([...tareas, data]);
-        }
-        setTareaInput('');
-        setIsFormVisible(false);
-      });
-  };
+     }) 
+      .then((response) => response.json()) 
+      .then((data) => { 
+        setTareas([...tareas, data]); 
+        setTareaInput(''); 
+        setIsFormVisible(false); 
+      }); 
+    };
+
+  const [modalInput, setModalInput] = useState('');
 
   const editarTarea = (index) => {
-    setTareaInput(tareas[index].título);
-    setEditingIndex(index);
-    setIsFormVisible(true);
+     setEditingIndex(index); 
+     setIsModalVisible(true); 
+     setModalInput(tareas[index].título);
+  };
+
+  const actualizarTarea = () => { 
+    const tarea = { título: modalInput };
+    const url = `http://localhost:5000/tareas/${tareas[editingIndex].id}`;
+     fetch(url, { method: 'PUT', headers: { 'Content-Type': 'application/json', }, 
+      body: JSON.stringify(tarea), }) 
+     .then((response) => response.json()) 
+     .then((data) => { const tareasActualizadas = tareas.map((tarea, i) => i === editingIndex ? data : tarea ); 
+      setTareas(tareasActualizadas); 
+      setEditingIndex(null); 
+      setModalInput(''); 
+      setIsModalVisible(false); 
+    }); 
   };
 
   const eliminarTarea = (index) => {
@@ -111,9 +116,19 @@ function App() {
       });
   };
 
-  const visibilidadTareas = () => {
-    setIsListVisible(!isListVisible);
-  };
+  
+  const handleToggle = (e) => {
+  e.preventDefault();
+  const targetId = e.currentTarget.getAttribute('data-target');
+  const targetElement = document.getElementById(targetId);
+
+  if (targetElement.classList.contains('show')) {
+    targetElement.classList.remove('show');
+  } else {
+    document.querySelectorAll('.show').forEach(el => el.classList.remove('show')); // Oculta todas las secciones abiertas
+    targetElement.classList.add('show');
+  }
+};
 
   return (
     <div className="App">
@@ -121,69 +136,87 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>To do list App</p>
       </header>
-      <div className="Añadir-tareas">
-        <button className="add-button" onClick={() => { setTareaInput(''); setEditingIndex(null); setIsFormVisible(true); }}>
-          Añadir tarea
-        </button>
-        {isFormVisible && (
-          <div className="form-container">
-            <input
-              type="text"
-              value={tareaInput}
-              onChange={(e) => setTareaInput(e.target.value)}
-              placeholder="Añade tu tarea"
-              required
-            />
-            <button onClick={añadirTarea}>
-              {editingIndex !== null ? 'Actualizar' : 'Añadir'}
-            </button>
-            <button onClick={() => setIsFormVisible(false)}>Cancelar</button>
-          </div>
-        )}
+      <body>
+      <div className='menu'> 
+        <nav> 
+          <ul> 
+            <li><a href="#" data-target="agregar" onClick={handleToggle}>
+              <FontAwesomeIcon icon={faAdd} /> Crea tu lista tareas</a>
+              </li> 
+              <div id="agregar" className="Añadir-tareas"> 
+              <button className="add-button" onClick={() => { 
+                setTareaInput(''); 
+                setEditingIndex(null); 
+                setIsFormVisible(true); }}>
+                  <FontAwesomeIcon icon={faAdd} />
+                  </button> {isFormVisible && ( 
+                    <div className="form-container"> 
+                    <input type="text" value={tareaInput} onChange={(e) => 
+                    setTareaInput(e.target.value)} placeholder="Añade tu tarea" required /> 
+                    <button id='Añadir' onClick={añadirTarea}>Añadir</button> 
+                    <button id='Cancelar' onClick={() =>
+                     setIsFormVisible(false)}>Cancelar
+                     </button> 
+                     </div>
+                  )} 
+                </div>
+             
+              <li><a href="#" data-target="buscar" onClick={handleToggle}><FontAwesomeIcon icon={faCheckCircle} /> Comprueba si has completado tu tarea</a></li>
+               <div id="buscar" className='buscar-tarea' > 
+                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                 placeholder="Buscar tarea" /> 
+                 <button id='buscador' onClick={buscarTarea}> 
+                  <FontAwesomeIcon icon={faSearch} /> 
+                  </button> {searchResults.length > 0 && ( 
+                    <ul className="Lista-tareas"> 
+                    {searchResults.map((tarea, index) => (
+                       <li key={tarea.id} 
+                       style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}> 
+                       <input id='checkbox' type="checkbox" checked={tarea.completada} onChange={() => CompletarTarea(index, true)} /> 
+                       {tarea.título} 
+                        </li> ))}
+                            </ul> )} 
+                            </div>
 
-<div className='buscador'>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar tarea"
-          />
-          <button  onClick={buscarTarea}>
-          <FontAwesomeIcon icon={faSearch} />
-          </button>
+              <li><a href="#" data-target="Tareas" onClick={handleToggle}>
+                <FontAwesomeIcon icon={faListCheck} /> Elimina tareas completadas o editalas</a>
+                </li> 
+                <div id="Tareas" className="To-do-section show">
+                   <h1>Lista de tareas</h1>
+                 <ul className="Lista-tareas"> 
+                  {tareas.map((tarea, index) => ( 
+                  <li key={tarea.id} style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}> 
+                  <input id='checkbox' type="checkbox" checked={tarea.completada} onChange={() => CompletarTarea(index)} />
+                   {tarea.título} 
+                   <button className="edit-button" onClick={() => editarTarea(index)} style={{ margin: '10px' }}> 
+                    <FontAwesomeIcon icon={faEdit} /> </button>
+                 <button className="delete-button" onClick={() => eliminarTarea(index)} style={{ margin: '10px' }}>
+                          <FontAwesomeIcon icon={faTrash} />
+                 </button>
+                    </li>
+                    ))}
+                  </ul>
+              </div>
+            </ul>
+          </nav>
         </div>
-      </div>
 
-      <div className="To-do-section">
-        <h1 className="Titulo-seccion-tareas">Lista de tareas</h1>
-          <button className='vistaTareas' onClick={visibilidadTareas}>
-            {isListVisible ? 'Ocultar Tareas' : 'Mostrar Tareas'}
-          </button>
-                  
-        { /* <Estas son las tareas mostadas por el botón mostrar/ocultar/ y la función resaltar la tarea hallada> */ } 
-        {isListVisible && (
-        <ul className="Tareas">
-          {tareas.map((tarea, index) => (
-            <li key={tarea.id} className={tarea.isHighlighted ? 'highlighted' : ''} style={{ textDecoration: tarea.completada ? 'line-through' : 'none' }}>
-              <input
-                type="checkbox"
-                checked={tarea.completada}
-                onChange={() => CompletarTarea(index)}
-              />
-              {tarea.título}
-                <button className="edit-button" onClick={() => editarTarea(index)} style={{ margin: '10px' }}>
-                  <FontAwesomeIcon icon={faEdit} />
-                </button>
-                <button className="delete-button" onClick={() => eliminarTarea(index)} style={{ margin: '10px' }}>
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        {/* Modal para Editar Tarea */} 
+        <div className={`modal ${isModalVisible ? 'show' : ''}`}> 
+          <div className="modal-content"> 
+            <span className="close" onClick={() => 
+              setIsModalVisible(false)}>&times;
+              </span> 
+              <h2>Me puedes editar aquí</h2> 
+              <input type="text" value={modalInput} onChange={(e) => 
+                setModalInput(e.target.value)} placeholder="Cambia mi título" 
+                required /> 
+                <button onClick={actualizarTarea}>Actualizar</button> 
+                </div> 
+              </div> 
+        </body>
     </div>
-  );
+  );  
 }
 
 export default App;

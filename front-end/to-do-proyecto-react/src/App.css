@@ -1,77 +1,194 @@
+.App{
+  background-color:  #000000d6; 
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+}
 .App-logo {
   pointer-events: none;
   border-radius: 50%;
-  width: 15vmin;
   object-fit: cover;
-  height: 15vh;
-  margin-top: 5vh;
+  margin-top: 8vh;
+  box-shadow: 20px 20px 60px #3b4849, -20px -20px 60px #9aa1a2; 
+  width:auto; height: 20vh;
+  display: flex;
+  animation: zoom infinite 20s ease-in-out;
+}
+
+@keyframes zoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.menu {
+    margin-top: 10vh;
+    background: linear-gradient(135deg, #ffff, #81b0b7); 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    font-size: calc(10px + 2vmin); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  }
+
+nav ul {
+  list-style: none; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-around; 
+  align-items: center; 
+  padding: 0; 
+  margin: 0; 
+  width: 100%;
+  
+}
+
+nav ul li {
+  width: 100%; 
+  
+} 
+
+nav ul li a { 
+  text-decoration: none; 
+  color: #fff; 
+  padding: 20px 25px; 
+  display: block; 
+  border-radius: 1px; 
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; 
+  text-align: center; 
+  background-color: rgba(0, 0, 0, 0.363); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); 
+  font-weight: bold; 
+} 
+
+nav ul li a i { 
+  margin-right: 8px; 
+  
+}
+
+nav ul li a:hover { 
+  background-color: #632218; 
+  color: #fff; 
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  
 }
 
 .App-header {
+  border-radius: 1dvw;
   margin: 0;
   background-color: #6ba0a2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(15px + 2vmin);
   color: white;
-  
+  font-family: 'Montserrat', sans-serif; 
+  font-weight:bold;
 }
 
 /* contenedor sección añadir tareas de la app */
 .Añadir-tareas {
-  background-color: #c9d0bc;
+  height: auto;
+  width: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-
+  justify-items: center;
+  flex-direction: row;
+  }
+ 
+  .Añadir-tareas #Añadir {
+    border-radius: 5ch;
+    border: none;
+    padding: 10px;
+    background-color: #f6fcfc;
+    color: #0f7983;
+    cursor: pointer;
+    margin:1lvw;
   }
 
-.Añadir-tareas input {
-  margin: 20px;
-}
+  .Añadir-tareas #Cancelar {
+    border-radius: 5ch;
+    border: none;
+    padding: 8px;
+    background-color: #af160b;
+    color: #faf6f5;
+    cursor: pointer;
+  
+  }
+  .Añadir-tareas #Añadir:hover, #Cancelar:hover{
+    background-color: transparent;
+  }
+
+input[type="text"] { 
+  width: 50%; 
+  padding: 10px; 
+  margin: 15px 0; 
+  box-sizing: border-box; 
+  border: none; 
+  border-radius: 2ch;
+  border-bottom: 2px solid #ccc;
+  transition: border-color 0.3s; 
+} 
+  
+  input[type="text"]:focus { border-color: #0f7983; outline: none; }
+
+  
+/* Buscador */
+#buscar{
+  display: flex;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+    
+ }
+ 
+ #buscador{
+   display: flex;
+   flex-direction: row;
+   background-color: transparent;
+   border-radius: 20px;
+   justify-content: space-between;
+   cursor: pointer;
+   margin:2dvw;
+  
+ }
+ 
+ .highlighted {
+   background-color: rgba(97, 117, 116, 0.236); 
+ }
+
 
 /* contenedor manejo de lista de tareas */
 .To-do-section {
-  background-color: #ffff;
+  background-image:url(../public/nota.jpg) ;
+  background-size: cover; 
+  background-position: center;
+  border-radius: 1dvw;
+  width:fit-content;
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-.Titulo-seccion-tareas {
-  font-size: calc(10px + 2vmin);
-  color: #6ba0a2;
-  text-align: left;
-  margin: 5vh;
+  justify-content: center;
   
 }
-
-/* Botón mostrar/ocultar tareas */
-.vistaTareas {
-  background-color: #6ba0a27b;
-  font-size: calc(1px + 2vmin);
-  border-radius: 80px;
-  padding: 10px;
-  max-width: fit-content;
-  margin: 0 12vh ;
-  display: flex;
-  border-width: 1cap;
-  border-color: #6ba0a20d;
-  color: #04413d;
-  cursor: pointer;
-  transition: background-color 0.3s;
- 
+.To-do-section h1{
+  font-family: 'Montserrat', sans-serif; 
+  font-weight:bold;
+  font-size: calc(6px + 2vmin);
+  color: #000000d6;
+  text-align: center;
 }
 
 .vistaTareas:hover {
   background-color: #03333456;
-   
 }
+
 /* Sección visualización de las tareas */
-.Tareas {
+.Lista-tareas {
   color: #000000;
   font-size: calc(2px + 2vmin);
   font-family: Arial, Helvetica, sans-serif;
@@ -79,57 +196,99 @@
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  max-width: fit-content;
-}
-
-.Tareas-buscador{
-
-  color: #000000;
-  font-size: calc(2px + 2vmin);
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: right;
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  margin-top: 20vh;
+  
   
 }
 
-/* Buscador */
-.buscador {
- display: contents;
- align-items: center;
- 
-   
-}
-
- .buscador input {
-  align-items: flex-end;
+#checkbox{
+ justify-content: center;
+ align-content: center;
+  width: 40px;
+  height: 20px;
   
 }
 
-.highlighted {
-  background-color: rgba(97, 117, 116, 0.41); 
+
+.Añadir-tareas, .buscar-tarea, .To-do-section {
+   display: none; 
+   max-height: 0;
+   overflow: hidden;
+   transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, margin 0.5s
+  } 
+
+.show { 
+  display: block; 
+  transition: max-height 0.5s ease-in-out;
+  max-height: 500px; 
+  padding: 10px;
+  margin: 10px 0;
 }
 
+/* Estilo para el modal */
+.modal {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  border-radius: 1dvw;
+  text-align: center;
+  z-index: 1000;  
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background-color: rgba(242, 238, 238, 0.964);
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease, visibility 0.3s ease; 
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.modal button{
+  margin: 2dvw;
+  border-radius: 20px;
+  background-color: #056d72e7;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.modal button:hover{
+  background-color: #022628e3;
+}
+.modal.show {
+  display: block;
+}
 
 /* Botones */
 .add-button {
-  background-color: #af160b;
+  background-color: #83aeae;
   max-width: fit-content;
   border-width: 1cap;
-  border-color:#8c12091f ;
+  border-color:#effeff1f ;
   color: white;
-  padding: 15px 30px;
+  padding: 12px 16px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 30px;
+  border-radius: 70px;
+  margin: 5.5vh;
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+   
 }
 
 .edit-button {
-  background-color: #af160b;
+  background-color: #056964ab;
   border: none;
   color: white;
   padding: 5px 10px;
@@ -154,11 +313,11 @@
 }
 
 .add-button:hover {
-  background-color: #3f0202;
+  background-color: #056d72;
 }
 
 .edit-button:hover {
-  background-color: #3f0202;
+  background-color: #023f31;
 }
 
 .delete-button:hover {
@@ -185,3 +344,27 @@
     max-height: auto;
   }
 }
+
+/* Media para el model*/
+
+/* Media query para celulares*/
+ @media (max-width: 767px) { 
+  .modal { 
+  width: 90%; 
+  height: auto; 
+  padding: 20px; 
+ } } 
+
+ /* Media query para tablets */
+ 
+ @media (min-width: 768px) and (max-width: 1023px) { 
+  .modal { 
+    width: 70%; 
+    height: 50%; } } 
+    
+/* Media query para desktops */
+     
+  @media (min-width: 1024px) { 
+  .modal { 
+    width: 50%; 
+    height: 50%; } }
